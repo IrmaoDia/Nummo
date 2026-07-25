@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --green: #34c759;
+  --red: #ff3b30;
+  --blue: #007aff;
+  --orange: #ff9500;
+  --purple: #5e5ce6;
+  --pink: #ff2d55;
+  --teal: #5ac8fa;
+  --indigo: #5856d6;
+  --font-brand: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #000000;
+  --surface: #1c1c1e;
+  --surface-2: #2c2c2e;
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f5f5f7;
+  --text-secondary: #98989d;
+  --green: #30d158;
+  --red: #ff453a;
+  --blue: #0a84ff;
+  --orange: #ff9f0a;
+  --purple: #5e5ce6;
+  --pink: #ff375f;
+  --teal: #64d2ff;
+  --indigo: #5e5ce6;
+  color-scheme: dark;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .glass {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Subtle, Apple-like scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

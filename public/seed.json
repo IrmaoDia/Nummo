@@ -1,0 +1,432 @@
+[
+  {
+    "id": "a53905cc-d140-4da0-8399-6a0f6213ffcb",
+    "titulo": "Aluguel do escritório",
+    "data": "2026-05-03",
+    "tipo": "gasto",
+    "valor": 1200,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-03T12:00:00.000Z",
+    "atualizadoEm": "2026-05-03T12:00:00.000Z"
+  },
+  {
+    "id": "6577c5ce-fae7-4a98-b564-5b1e0a9b7aa2",
+    "titulo": "Freelance de design",
+    "data": "2026-05-06",
+    "tipo": "entrada",
+    "valor": 2012.98,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-05-06T12:00:00.000Z",
+    "atualizadoEm": "2026-05-06T12:00:00.000Z"
+  },
+  {
+    "id": "14aa8cd1-2475-4369-9845-23d5d3690f0c",
+    "titulo": "Conta de luz",
+    "data": "2026-05-07",
+    "tipo": "gasto",
+    "valor": 247.38,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-05-07T12:00:00.000Z",
+    "atualizadoEm": "2026-05-07T12:00:00.000Z"
+  },
+  {
+    "id": "8a6c8ac4-fdc5-43a2-a1d0-ea9958206137",
+    "titulo": "Uber",
+    "data": "2026-05-07",
+    "tipo": "gasto",
+    "valor": 78.19,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-05-07T12:00:00.000Z",
+    "atualizadoEm": "2026-05-07T12:00:00.000Z"
+  },
+  {
+    "id": "8be3bdcb-87ca-44f2-b9b6-46f3ba82f205",
+    "titulo": "Academia",
+    "data": "2026-05-08",
+    "tipo": "gasto",
+    "valor": 145.3,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-05-08T12:00:00.000Z",
+    "atualizadoEm": "2026-05-08T12:00:00.000Z"
+  },
+  {
+    "id": "8d006582-482c-4b23-a3b8-2fd985b33ced",
+    "titulo": "Reembolso",
+    "data": "2026-05-09",
+    "tipo": "entrada",
+    "valor": 276.7,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-05-09T12:00:00.000Z",
+    "atualizadoEm": "2026-05-09T12:00:00.000Z"
+  },
+  {
+    "id": "d75767b1-442a-4691-9d7f-4f1f98194667",
+    "titulo": "Salário",
+    "data": "2026-05-10",
+    "tipo": "entrada",
+    "valor": 4000,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-05-10T12:00:00.000Z",
+    "atualizadoEm": "2026-05-10T12:00:00.000Z"
+  },
+  {
+    "id": "53a1f74d-6cf4-47ac-9ce1-933fd8d34bed",
+    "titulo": "Hospedagem do site",
+    "data": "2026-05-10",
+    "tipo": "gasto",
+    "valor": 85.74,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-10T12:00:00.000Z",
+    "atualizadoEm": "2026-05-10T12:00:00.000Z"
+  },
+  {
+    "id": "8eab9919-175b-4dae-9d6b-29ffdbc4bc5d",
+    "titulo": "Pagamento de cliente",
+    "data": "2026-05-16",
+    "tipo": "entrada",
+    "valor": 4678.83,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-16T12:00:00.000Z",
+    "atualizadoEm": "2026-05-16T12:00:00.000Z"
+  },
+  {
+    "id": "1938cc61-4978-4d7b-8e70-2bd1a7f95ea8",
+    "titulo": "Assinatura Notion",
+    "data": "2026-05-23",
+    "tipo": "gasto",
+    "valor": 47.29,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-23T12:00:00.000Z",
+    "atualizadoEm": "2026-05-23T12:00:00.000Z"
+  },
+  {
+    "id": "ca89d213-3106-4502-a99d-8d8059559dfc",
+    "titulo": "Aluguel do escritório",
+    "data": "2026-05-23",
+    "tipo": "gasto",
+    "valor": 1200,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-23T12:00:00.000Z",
+    "atualizadoEm": "2026-05-23T12:00:00.000Z"
+  },
+  {
+    "id": "92264e50-7009-46f2-bc1d-9dcab658e846",
+    "titulo": "Conta de luz",
+    "data": "2026-05-28",
+    "tipo": "gasto",
+    "valor": 245.88,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-05-28T12:00:00.000Z",
+    "atualizadoEm": "2026-05-28T12:00:00.000Z"
+  },
+  {
+    "id": "7083577f-7bca-478b-b6d2-5ed20e48c59c",
+    "titulo": "Comissão de afiliado",
+    "data": "2026-05-31",
+    "tipo": "entrada",
+    "valor": 213.13,
+    "categoria": "empresa",
+    "criadoEm": "2026-05-31T12:00:00.000Z",
+    "atualizadoEm": "2026-05-31T12:00:00.000Z"
+  },
+  {
+    "id": "596f1418-72dc-4450-9fe9-e6cc2ffa4627",
+    "titulo": "Conta de luz",
+    "data": "2026-06-03",
+    "tipo": "gasto",
+    "valor": 237.11,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-06-03T12:00:00.000Z",
+    "atualizadoEm": "2026-06-03T12:00:00.000Z"
+  },
+  {
+    "id": "454f7bba-47cf-4db3-95fd-02cebb9f93d3",
+    "titulo": "Contador",
+    "data": "2026-06-05",
+    "tipo": "gasto",
+    "valor": 273.68,
+    "categoria": "empresa",
+    "criadoEm": "2026-06-05T12:00:00.000Z",
+    "atualizadoEm": "2026-06-05T12:00:00.000Z"
+  },
+  {
+    "id": "8323199f-c8a7-4acd-bc37-59ce109bef37",
+    "titulo": "Conta de luz",
+    "data": "2026-06-08",
+    "tipo": "gasto",
+    "valor": 149.25,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-06-08T12:00:00.000Z",
+    "atualizadoEm": "2026-06-08T12:00:00.000Z"
+  },
+  {
+    "id": "41128c35-9370-4c67-968b-a924f45b7717",
+    "titulo": "Pagamento de cliente",
+    "data": "2026-06-10",
+    "tipo": "entrada",
+    "valor": 2993.07,
+    "categoria": "empresa",
+    "criadoEm": "2026-06-10T12:00:00.000Z",
+    "atualizadoEm": "2026-06-10T12:00:00.000Z"
+  },
+  {
+    "id": "a0de6daa-9047-497a-b65b-742d700817e2",
+    "titulo": "Contador",
+    "data": "2026-06-13",
+    "tipo": "gasto",
+    "valor": 449.66,
+    "categoria": "empresa",
+    "criadoEm": "2026-06-13T12:00:00.000Z",
+    "atualizadoEm": "2026-06-13T12:00:00.000Z"
+  },
+  {
+    "id": "780a3507-7cff-45e6-9a29-150ca98e538d",
+    "titulo": "Uber",
+    "data": "2026-06-17",
+    "tipo": "gasto",
+    "valor": 57.1,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-06-17T12:00:00.000Z",
+    "atualizadoEm": "2026-06-17T12:00:00.000Z"
+  },
+  {
+    "id": "159eed7b-9fea-44c4-9b26-81df45208894",
+    "titulo": "Reembolso",
+    "data": "2026-06-20",
+    "tipo": "entrada",
+    "valor": 122.96,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-06-20T12:00:00.000Z",
+    "atualizadoEm": "2026-06-20T12:00:00.000Z"
+  },
+  {
+    "id": "481b1c60-46a3-4ab3-a6c0-618385452892",
+    "titulo": "Reembolso",
+    "data": "2026-06-21",
+    "tipo": "entrada",
+    "valor": 350.47,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-06-21T12:00:00.000Z",
+    "atualizadoEm": "2026-06-21T12:00:00.000Z"
+  },
+  {
+    "id": "a6d09f88-6d55-499b-878b-6a0e726baa01",
+    "titulo": "Uber",
+    "data": "2026-06-21",
+    "tipo": "gasto",
+    "valor": 68.8,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-06-21T12:00:00.000Z",
+    "atualizadoEm": "2026-06-21T12:00:00.000Z"
+  },
+  {
+    "id": "064becd3-2c95-49d6-89c8-f49f1c605b0b",
+    "titulo": "Supermercado",
+    "data": "2026-06-21",
+    "tipo": "gasto",
+    "valor": 146.47,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-06-21T12:00:00.000Z",
+    "atualizadoEm": "2026-06-21T12:00:00.000Z"
+  },
+  {
+    "id": "f5186fe7-212c-460e-aeea-940ce98e9211",
+    "titulo": "Anúncios Google",
+    "data": "2026-06-21",
+    "tipo": "gasto",
+    "valor": 1091.59,
+    "categoria": "empresa",
+    "criadoEm": "2026-06-21T12:00:00.000Z",
+    "atualizadoEm": "2026-06-21T12:00:00.000Z"
+  },
+  {
+    "id": "886a74ff-f02e-49a1-aa47-0b5b35c41ab7",
+    "titulo": "Reembolso",
+    "data": "2026-06-22",
+    "tipo": "entrada",
+    "valor": 325.55,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-06-22T12:00:00.000Z",
+    "atualizadoEm": "2026-06-22T12:00:00.000Z"
+  },
+  {
+    "id": "4e7ade26-222d-4ddc-8397-4280d5600d8b",
+    "titulo": "Curso online",
+    "data": "2026-06-22",
+    "tipo": "gasto",
+    "valor": 644.83,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-06-22T12:00:00.000Z",
+    "atualizadoEm": "2026-06-22T12:00:00.000Z"
+  },
+  {
+    "id": "934e9fed-71c8-4e76-b8e3-25a404a26dcc",
+    "titulo": "Ferramenta de e-mail",
+    "data": "2026-06-27",
+    "tipo": "gasto",
+    "valor": 128.08,
+    "categoria": "empresa",
+    "criadoEm": "2026-06-27T12:00:00.000Z",
+    "atualizadoEm": "2026-06-27T12:00:00.000Z"
+  },
+  {
+    "id": "98935904-9820-48d4-bdde-d55a5336833d",
+    "titulo": "Salário",
+    "data": "2026-06-30",
+    "tipo": "entrada",
+    "valor": 4000,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-06-30T12:00:00.000Z",
+    "atualizadoEm": "2026-06-30T12:00:00.000Z"
+  },
+  {
+    "id": "730d7809-8364-4bf7-b05e-a059a856a42e",
+    "titulo": "Comissão de afiliado",
+    "data": "2026-07-01",
+    "tipo": "entrada",
+    "valor": 603.64,
+    "categoria": "empresa",
+    "criadoEm": "2026-07-01T12:00:00.000Z",
+    "atualizadoEm": "2026-07-01T12:00:00.000Z"
+  },
+  {
+    "id": "1083d2f1-5c58-43c6-bcbe-c92b3d8c6c3c",
+    "titulo": "Anúncios Google",
+    "data": "2026-07-01",
+    "tipo": "gasto",
+    "valor": 657.13,
+    "categoria": "empresa",
+    "criadoEm": "2026-07-01T12:00:00.000Z",
+    "atualizadoEm": "2026-07-01T12:00:00.000Z"
+  },
+  {
+    "id": "ec47fcfd-0e37-4ad3-9fae-309d8cdc0e58",
+    "titulo": "Supermercado",
+    "data": "2026-07-04",
+    "tipo": "gasto",
+    "valor": 550.42,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-07-04T12:00:00.000Z",
+    "atualizadoEm": "2026-07-04T12:00:00.000Z"
+  },
+  {
+    "id": "5ef3bf7c-4055-498b-875a-41a14437da5c",
+    "titulo": "Assinatura Notion",
+    "data": "2026-07-04",
+    "tipo": "gasto",
+    "valor": 46.91,
+    "categoria": "empresa",
+    "criadoEm": "2026-07-04T12:00:00.000Z",
+    "atualizadoEm": "2026-07-04T12:00:00.000Z"
+  },
+  {
+    "id": "1b089b21-d040-47e7-afb9-e63f1aab36c3",
+    "titulo": "Reembolso",
+    "data": "2026-07-06",
+    "tipo": "entrada",
+    "valor": 269.62,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-07-06T12:00:00.000Z",
+    "atualizadoEm": "2026-07-06T12:00:00.000Z"
+  },
+  {
+    "id": "90e08797-2024-4696-9e1d-d5d2dc0a9290",
+    "titulo": "Curso online",
+    "data": "2026-07-08",
+    "tipo": "gasto",
+    "valor": 931.2,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-07-08T12:00:00.000Z",
+    "atualizadoEm": "2026-07-08T12:00:00.000Z"
+  },
+  {
+    "id": "c7c38e1d-97b4-4521-83bf-769270b9d8d2",
+    "titulo": "Uber",
+    "data": "2026-07-08",
+    "tipo": "gasto",
+    "valor": 43.91,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-07-08T12:00:00.000Z",
+    "atualizadoEm": "2026-07-08T12:00:00.000Z"
+  },
+  {
+    "id": "386fb99f-d248-4043-b0c1-3ee0c82a30b1",
+    "titulo": "Salário",
+    "data": "2026-07-09",
+    "tipo": "entrada",
+    "valor": 4000,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-07-09T12:00:00.000Z",
+    "atualizadoEm": "2026-07-09T12:00:00.000Z"
+  },
+  {
+    "id": "ed22b5a0-b43c-4c77-b8f1-9ee3f10a0234",
+    "titulo": "Academia",
+    "data": "2026-07-09",
+    "tipo": "gasto",
+    "valor": 148.73,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-07-09T12:00:00.000Z",
+    "atualizadoEm": "2026-07-09T12:00:00.000Z"
+  },
+  {
+    "id": "6951c14e-f4f9-497c-af9d-3bf50431c59b",
+    "titulo": "Anúncios Meta",
+    "data": "2026-07-10",
+    "tipo": "gasto",
+    "valor": 1268.35,
+    "categoria": "empresa",
+    "criadoEm": "2026-07-10T12:00:00.000Z",
+    "atualizadoEm": "2026-07-10T12:00:00.000Z"
+  },
+  {
+    "id": "d1d1b7c8-a3b6-40ce-85a2-dc74e9543084",
+    "titulo": "Internet",
+    "data": "2026-07-11",
+    "tipo": "gasto",
+    "valor": 141.91,
+    "categoria": "pessoa_fisica",
+    "criadoEm": "2026-07-11T12:00:00.000Z",
+    "atualizadoEm": "2026-07-11T12:00:00.000Z"
+  },
+  {
+    "id": "75ffa03e-8e4e-4af6-b75d-ba7091e917a6",
+    "titulo": "Uber",
+    "data": "2026-07-16",
+    "tipo": "gasto",
+    "valor": 72.17,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-07-16T12:00:00.000Z",
+    "atualizadoEm": "2026-07-16T12:00:00.000Z"
+  },
+  {
+    "id": "f3ee1df0-edf2-465a-9989-9e3ff4527775",
+    "titulo": "Reembolso",
+    "data": "2026-07-18",
+    "tipo": "entrada",
+    "valor": 396.34,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-07-18T12:00:00.000Z",
+    "atualizadoEm": "2026-07-18T12:00:00.000Z"
+  },
+  {
+    "id": "eac14641-c3eb-458f-90eb-7d0ab080a369",
+    "titulo": "Mentoria",
+    "data": "2026-07-23",
+    "tipo": "entrada",
+    "valor": 1642.31,
+    "categoria": "empresa",
+    "criadoEm": "2026-07-23T12:00:00.000Z",
+    "atualizadoEm": "2026-07-23T12:00:00.000Z"
+  },
+  {
+    "id": "bbdf14f9-3706-454b-86b0-2601ba5edc2b",
+    "titulo": "Uber",
+    "data": "2026-07-24",
+    "tipo": "gasto",
+    "valor": 61.06,
+    "categoria": "sem_categoria",
+    "criadoEm": "2026-07-24T12:00:00.000Z",
+    "atualizadoEm": "2026-07-24T12:00:00.000Z"
+  }
+]
