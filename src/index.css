@@ -78,6 +78,17 @@
   }
 }
 
+/* Altura da janela: no mobile, 100vh ignora a barra de endereço e empurra o
+   rodapé para fora da área visível. 100dvh acompanha a área realmente visível. */
+.app-viewport {
+  height: 100vh;
+}
+@supports (height: 100dvh) {
+  .app-viewport {
+    height: 100dvh;
+  }
+}
+
 @keyframes shimmer {
   100% {
     transform: translateX(100%);

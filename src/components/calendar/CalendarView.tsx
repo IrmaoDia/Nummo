@@ -4,7 +4,7 @@ import { formatMonthLong, toISODate } from '../../lib/format'
 import type { Lancamento } from '../../types'
 import { EmptyState } from '../ui/EmptyState'
 import { CalendarGrid } from './CalendarGrid'
-import { MobileAgenda } from './MobileAgenda'
+import { MobileCalendar } from './MobileCalendar'
 
 interface CalendarViewProps {
   month: Date
@@ -55,7 +55,7 @@ export function CalendarView({
   }
 
   return isMobile ? (
-    <MobileAgenda items={items} onAdd={onAdd} onEdit={onEdit} />
+    <MobileCalendar month={month} items={items} onAdd={onAdd} onEdit={onEdit} />
   ) : (
     <CalendarGrid
       month={month}

@@ -128,7 +128,7 @@ export function AppShell() {
   }, [isOpen])
 
   return (
-    <div className="flex h-screen overflow-hidden bg-bg">
+    <div className="app-viewport flex overflow-hidden bg-bg">
       {!isMobile && (
         <Sidebar
           view={view}
@@ -172,7 +172,9 @@ export function AppShell() {
           }
         />
 
-        <main className="flex-1 overflow-y-auto">
+        {/* min-h-0: sem isso, conteúdo alto (Resumo) impede o flex item de
+            encolher e empurra a barra inferior para fora da tela no mobile. */}
+        <main className="min-h-0 flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-5xl px-4 py-5">
             {showSkeleton ? (
               <ContentSkeleton />
