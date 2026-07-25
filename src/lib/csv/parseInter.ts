@@ -105,7 +105,8 @@ export function parseInter(texto: string): ResultadoParse {
 
     const data = parseDataBR(celulas[iData] ?? '')
     const valorBruto = parseValorBR(celulas[iValor] ?? '')
-    if (!data || valorBruto === null) {
+    // Valor zero é descartado: não representa movimento e o banco exige > 0.
+    if (!data || valorBruto === null || valorBruto === 0) {
       ignoradas++
       continue
     }

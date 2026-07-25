@@ -139,6 +139,15 @@ describe('parseInter — amostras reais', () => {
     expect(r.ignoradas).toBe(1)
   })
 
+  it('descarta lançamentos de valor zero (o banco exige valor > 0)', () => {
+    const r = parseInter(
+      arquivo('25/07/2026;Estorno;Sem movimento;0,00;10,00', '25/07/2026;Compra;Boa;-1,00;9,00'),
+    )
+    expect(r.linhas).toHaveLength(1)
+    expect(r.linhas[0].titulo).toBe('Boa')
+    expect(r.ignoradas).toBe(1)
+  })
+
   it('94 linhas de dados resultam em 94 lançamentos, com somas corretas', () => {
     const linhas: string[] = []
     // 50 gastos de 10,00 e 44 entradas de 20,00

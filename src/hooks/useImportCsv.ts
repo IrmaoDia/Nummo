@@ -127,11 +127,15 @@ export function useImportCsv() {
       }))
       const ids = await repository.inserirLancamentosEmLote(activeId, itens)
       const ultimaData = selecionadas.map((l) => l.data).sort().at(-1) ?? ''
-      await qc.invalidateQueries({ queryKey: ['lancamentos', user?.id] })
-      await qc.invalidateQueries({ queryKey: ['perfis-agg', user?.id] })
+      // Sem await: `invalidateQueries` só resolve quando o refetch termina, e
+      // esperar por isso deixaria o botão preso em "Importando…" mesmo com os
+      // dados já gravados. A tela se atualiza sozinha quando o refetch chegar.
+      void qc.invalidateQueries({ queryKey: ['lancamentos', user?.id] })
+      void qc.invalidateQueries({ queryKey: ['perfis-agg', user?.id] })
       return { ids, ultimaData }
-    } catch {
-      setErro(ERRO_GRAVAR)
+    } catch (e) {
+      const detalhe = e instanceof Error ? e.message : ''
+      setErro(detalhe ? `${ERRO_GRAVAR} (${detalhe})` : ERRO_GRAVAR)
       setEtapa('preview') // mantém a pré-visualização aberta
       return null
     }
@@ -141,8 +145,8 @@ export function useImportCsv() {
   const desfazer = useCallback(
     async (ids: string[]) => {
       await repository.excluirLote(ids)
-      await qc.invalidateQueries({ queryKey: ['lancamentos', user?.id] })
-      await qc.invalidateQueries({ queryKey: ['perfis-agg', user?.id] })
+      void qc.invalidateQueries({ queryKey: ['lancamentos', user?.id] })
+      void qc.invalidateQueries({ queryKey: ['perfis-agg', user?.id] })
     },
     [qc, user?.id],
   )

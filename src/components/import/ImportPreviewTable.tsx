@@ -44,7 +44,7 @@ export function ImportPreviewTable({
           className="flex items-center gap-2 text-legend font-medium text-ink"
         >
           <Caixa marcada={todasMarcadas} />
-          {todasMarcadas ? 'Nenhum' : 'Selecionar todos'}
+          {todasMarcadas ? 'Desmarcar todos' : 'Selecionar todos'}
         </button>
         <span className="ml-auto text-legend text-subtle">
           {linhas.filter((l) => l.selecionada).length} de {linhas.length}
