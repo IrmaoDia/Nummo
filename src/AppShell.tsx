@@ -13,6 +13,7 @@ import { Sidebar } from './components/layout/Sidebar'
 import { SummaryBar } from './components/layout/SummaryBar'
 import { WelcomeModal } from './components/onboarding/WelcomeModal'
 import { ManageProfilesModal } from './components/profile/ManageProfilesModal'
+import { ImportModal } from './components/import/ImportModal'
 import { ContentSkeleton } from './components/ui/Skeleton'
 import { OfflineBanner } from './components/ui/OfflineBanner'
 import { useToast } from './components/ui/Toast'
@@ -37,7 +38,8 @@ const COLLAPSE_KEY = 'financas.sidebarCollapsed'
 export function AppShell() {
   const [view, setView] = useState<View>('dia')
   const [periodo, setPeriodo] = useState<Periodo>('mes')
-  const { month, direction, next, prev, goToday } = useMonth()
+  const { month, direction, next, prev, goToday, goToMonth } = useMonth()
+  const [importOpen, setImportOpen] = useState(false)
   const filters = useFilters()
   const { all, update, loading } = useLancamentos()
   const { openNew, openEdit, isOpen } = useEntryModal()
@@ -135,6 +137,7 @@ export function AppShell() {
           onViewChange={setView}
           collapsed={collapsed}
           onToggleCollapse={toggleCollapse}
+          onImportCsv={() => setImportOpen(true)}
         />
       )}
 
@@ -149,7 +152,7 @@ export function AppShell() {
           onToday={goToday}
           onPeriodChange={setPeriodo}
           showProfileAvatar={isMobile}
-          actionsSlot={<DataMenu />}
+          actionsSlot={<DataMenu onImportCsv={() => setImportOpen(true)} />}
           activeChips={
             view === 'dia' ? (
               <ActiveFilterChips
@@ -234,6 +237,15 @@ export function AppShell() {
       </div>
 
       <MigrateModal />
+
+      <ImportModal
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        onImported={(ultimaData) => {
+          setView('dia')
+          goToMonth(new Date(`${ultimaData}T12:00:00`))
+        }}
+      />
 
       <WelcomeModal
         open={showWelcome}

@@ -1,0 +1,15 @@
+Extrato Conta Corrente
+Conta ;202893324
+Período ;25/06/2026 a 25/07/2026
+Saldo ;3.959,97
+
+Data Lançamento;Histórico;Descrição;Valor;Saldo
+25/07/2026;Compra no débito;Lojas Americanas 361   Sao Luis      Bra;-45,98;3.959,97
+24/07/2026;Pix recebido;Lmg Empreendimentos Ltda;1.000,00;5.313,95
+24/07/2026;Pix enviado ;Facebook Servicos Online Do Brasil Ltda;-1.100,00;4.313,95
+20/07/2026;Pagamento efetuado;Conta de energia Equatorial;-289,45;4.100,00
+15/07/2026;Cred Pontos Cashback Conta;Cashback Inter;12,35;4.112,35
+10/07/2026;Compra no débito;Supermercado Mateus   Sao Luis;-432,10;3.680,25
+01/07/2026;Pix recebido;Salario Empresa X Ltda;4.500,00;8.180,25
+25/06/2026;Compra no débito;Posto Ipiranga;-200,00;7.980,25
+

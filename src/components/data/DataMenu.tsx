@@ -1,6 +1,7 @@
 import {
   Download,
   FileSpreadsheet,
+  FileUp,
   MoreHorizontal,
   Sparkles,
   Trash2,
@@ -51,7 +52,11 @@ function MenuItem({
   )
 }
 
-export function DataMenu() {
+interface DataMenuProps {
+  onImportCsv?: () => void
+}
+
+export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
   const { perfis, active, isAll } = useProfile()
   const { all, importItems, clearActive } = useLancamentos()
   const { bulkPutPerfis } = usePerfis()
@@ -150,6 +155,14 @@ export function DataMenu() {
               onClick={() => {
                 void doExportCSV()
                 close()
+              }}
+            />
+            <MenuItem
+              icon={<FileUp className="h-4 w-4" />}
+              label="Importar extrato (CSV)"
+              onClick={() => {
+                close()
+                onImportCsv?.()
               }}
             />
             <MenuItem

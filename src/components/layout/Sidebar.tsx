@@ -2,6 +2,7 @@ import {
   CalendarDays,
   ChartPie,
   Columns3,
+  FileUp,
   LogOut,
   Monitor,
   Moon,
@@ -42,6 +43,7 @@ interface SidebarProps {
   onViewChange: (v: View) => void
   collapsed: boolean
   onToggleCollapse: () => void
+  onImportCsv?: () => void
 }
 
 function FooterRow({
@@ -152,7 +154,13 @@ function CollapseButton({ collapsed, onClick }: { collapsed: boolean; onClick: (
   )
 }
 
-export function Sidebar({ view, onViewChange, collapsed, onToggleCollapse }: SidebarProps) {
+export function Sidebar({
+  view,
+  onViewChange,
+  collapsed,
+  onToggleCollapse,
+  onImportCsv,
+}: SidebarProps) {
   const { activeColor } = useProfile()
   const { signOut } = useAuth()
   const [manageOpen, setManageOpen] = useState(false)
@@ -203,6 +211,12 @@ export function Sidebar({ view, onViewChange, collapsed, onToggleCollapse }: Sid
       {/* Rodapé */}
       <div className="flex flex-col gap-0.5 border-t border-hairline p-3">
         <ThemeRow collapsed={collapsed} />
+        <FooterRow
+          icon={<FileUp className="h-[18px] w-[18px] shrink-0" />}
+          label="Importar extrato"
+          collapsed={collapsed}
+          onClick={() => onImportCsv?.()}
+        />
         <FooterRow
           icon={<Settings2 className="h-[18px] w-[18px] shrink-0" />}
           label="Configurações"

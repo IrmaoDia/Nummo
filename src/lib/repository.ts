@@ -11,6 +11,9 @@ import {
 } from './mappers'
 import type { Lancamento, LancamentoInput, Perfil, PerfilInput } from '../types'
 
+/** Item vindo de um extrato: já normalizado, mas ainda sem perfil/id. */
+export type LancamentoImportado = Omit<LancamentoInput, 'perfilId'>
+
 /**
  * Camada de persistência abstrata (implementada sobre o Supabase).
  * NENHUM componente de UI importa `supabase` diretamente — só este arquivo.
@@ -34,6 +37,13 @@ export interface Repository {
   inserirLancamento(l: Lancamento): Promise<void>
   bulkInserirLancamentos(items: Lancamento[]): Promise<void>
   limparPerfil(perfilId: string): Promise<void>
+
+  // Importação de extrato
+  /** Insere em blocos e devolve os ids criados (para o "Desfazer"). */
+  inserirLancamentosEmLote(perfilId: string, itens: LancamentoImportado[]): Promise<string[]>
+  /** Lançamentos do perfil num intervalo, para detectar duplicatas. */
+  listarParaConferencia(perfilId: string, inicio: string, fim: string): Promise<Lancamento[]>
+  excluirLote(ids: string[]): Promise<void>
 
   // Agregados (contagem/saldo por perfil)
   agregadoPorPerfil(): Promise<{ counts: Record<string, number>; saldos: Record<string, number> }>
@@ -159,6 +169,56 @@ class SupabaseRepository implements Repository {
   async limparPerfil(perfilId: string): Promise<void> {
     const { error } = await supabase.from('lancamentos').delete().eq('perfil_id', perfilId)
     fail('limparPerfil', error)
+  }
+
+  // ---- Importação de extrato ----
+  async inserirLancamentosEmLote(
+    perfilId: string,
+    itens: LancamentoImportado[],
+  ): Promise<string[]> {
+    if (!itens.length) return []
+    const userId = await currentUserId()
+    const criados: string[] = []
+    try {
+      for (let i = 0; i < itens.length; i += 100) {
+        const bloco = itens
+          .slice(i, i + 100)
+          .map((item) => lancamentoToInsert({ ...item, perfilId }, userId))
+        const { data, error } = await supabase.from('lancamentos').insert(bloco).select('id')
+        if (error) throw new Error(error.message)
+        for (const r of data ?? []) criados.push(r.id)
+      }
+      return criados
+    } catch (e) {
+      // Nada de importação pela metade: desfaz os blocos já inseridos.
+      if (criados.length) {
+        await supabase.from('lancamentos').delete().in('id', criados)
+      }
+      throw e
+    }
+  }
+
+  async listarParaConferencia(
+    perfilId: string,
+    inicio: string,
+    fim: string,
+  ): Promise<Lancamento[]> {
+    const { data, error } = await supabase
+      .from('lancamentos')
+      .select('*')
+      .eq('perfil_id', perfilId)
+      .gte('data', inicio)
+      .lte('data', fim)
+    fail('listarParaConferencia', error)
+    return (data ?? []).map(lancamentoFromRow)
+  }
+
+  async excluirLote(ids: string[]): Promise<void> {
+    if (!ids.length) return
+    for (let i = 0; i < ids.length; i += 100) {
+      const { error } = await supabase.from('lancamentos').delete().in('id', ids.slice(i, i + 100))
+      fail('excluirLote', error)
+    }
   }
 
   async agregadoPorPerfil(): Promise<{ counts: Record<string, number>; saldos: Record<string, number> }> {
