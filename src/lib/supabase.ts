@@ -26,6 +26,12 @@ function clientStub(): SupabaseClient<Database> {
  */
 export const supabase: SupabaseClient<Database> = supabaseConfigured
   ? createClient<Database>(url, key, {
-      auth: { persistSession: true, autoRefreshToken: true },
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        // Processa o #access_token=... com que o link de confirmação de e-mail
+        // volta, transformando-o em sessão e limpando a URL.
+        detectSessionInUrl: true,
+      },
     })
   : clientStub()

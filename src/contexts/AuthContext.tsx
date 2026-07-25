@@ -71,7 +71,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return error ? { error: traduzErro(error.message) } : {}
       },
       signUp: async (email, password) => {
-        const { error } = await supabase.auth.signUp({ email, password })
+        // Sem `emailRedirectTo`, o link de confirmação usa a "Site URL" do
+        // projeto (localhost:3000 por padrão). Apontar para a origem atual faz
+        // o e-mail voltar para onde a conta foi criada — produção ou dev.
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: window.location.origin },
+        })
         if (error) return { error: traduzErro(error.message) }
         // Persiste para o caso de "Confirm email" estar ligado (a sessão só nasce
         // após confirmar por e-mail, em outro carregamento da página).
