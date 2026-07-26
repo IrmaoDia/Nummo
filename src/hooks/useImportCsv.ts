@@ -3,13 +3,18 @@ import { useCallback, useMemo, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useProfile } from '../contexts/ProfileContext'
 import { parseInter } from '../lib/csv/parseInter'
-import type { LinhaPreview } from '../lib/csv/types'
+import type { LinhaImportada, LinhaPreview, ResultadoParse } from '../lib/csv/types'
+import { parseImport } from '../lib/schema'
 import { repository } from '../lib/repository'
+import type { Perfil } from '../types'
 
-export const ERRO_NAO_CSV = 'Envie um arquivo .csv exportado do seu banco.'
+export const ERRO_NAO_CSV = 'Envie um arquivo .csv do seu banco ou um backup .json do Nummo.'
 export const ERRO_SEM_LINHAS =
   'Não encontramos lançamentos neste arquivo. Confira se é o extrato em CSV.'
+export const ERRO_JSON_INVALIDO = 'Este arquivo não é um backup válido do Nummo.'
 export const ERRO_GRAVAR = 'Não foi possível importar. Tente novamente.'
+
+// TODO: importar PDF do Inter (aguardando layout de exemplo)
 
 type Etapa = 'arquivo' | 'preview' | 'gravando'
 
@@ -18,8 +23,37 @@ function chaveDup(data: string, valor: number, titulo: string): string {
   return `${data}|${valor.toFixed(2)}|${titulo.trim().toLowerCase()}`
 }
 
+/** Backup do Nummo → mesmas linhas de conferência do extrato bancário. */
+function parseBackup(texto: string, perfis: Perfil[], perfilId: string): ResultadoParse {
+  const vazio: ResultadoParse = { linhas: [], ignoradas: 0, inicio: null, fim: null }
+  let raw: unknown
+  try {
+    raw = JSON.parse(texto)
+  } catch {
+    return vazio
+  }
+  const r = parseImport(raw, perfis, perfilId)
+  // Perfis do backup são ignorados de propósito: o modal promete gravar tudo
+  // no perfil ativo, e é isso que a conferência mostra.
+  const linhas: LinhaImportada[] = r.lancamentos.map((l) => ({
+    data: l.data,
+    titulo: l.titulo,
+    tipo: l.tipo,
+    valor: l.valor,
+    categoria: l.categoria,
+    historico: l.observacao ?? '',
+  }))
+  const datas = linhas.map((l) => l.data).sort()
+  return {
+    linhas,
+    ignoradas: r.invalidos,
+    inicio: datas[0] ?? null,
+    fim: datas[datas.length - 1] ?? null,
+  }
+}
+
 export function useImportCsv() {
-  const { activeId, isAll, active } = useProfile()
+  const { activeId, isAll, active, perfis } = useProfile()
   const { user } = useAuth()
   const qc = useQueryClient()
 
@@ -45,16 +79,18 @@ export function useImportCsv() {
   const carregarArquivo = useCallback(
     async (file: File) => {
       setErro('')
-      if (!file.name.toLowerCase().endsWith('.csv')) {
+      const nome = file.name.toLowerCase()
+      const backup = nome.endsWith('.json')
+      if (!backup && !nome.endsWith('.csv')) {
         setErro(ERRO_NAO_CSV)
         return
       }
       setNomeArquivo(file.name)
 
       const texto = await file.text()
-      const r = parseInter(texto)
+      const r = backup ? parseBackup(texto, perfis, activeId) : parseInter(texto)
       if (!r.linhas.length || !r.inicio || !r.fim) {
-        setErro(ERRO_SEM_LINHAS)
+        setErro(backup ? ERRO_JSON_INVALIDO : ERRO_SEM_LINHAS)
         return
       }
 
@@ -83,7 +119,7 @@ export function useImportCsv() {
       setIgnoradas(r.ignoradas)
       setEtapa('preview')
     },
-    [activeId],
+    [activeId, perfis],
   )
 
   const alternarLinha = useCallback((id: string) => {

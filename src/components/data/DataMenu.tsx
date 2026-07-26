@@ -1,25 +1,13 @@
-import {
-  Download,
-  FileSpreadsheet,
-  FileUp,
-  MoreHorizontal,
-  Sparkles,
-  Trash2,
-  Upload,
-} from 'lucide-react'
-import { useRef, useState, type ReactNode } from 'react'
+import { FileDown, FileUp, MoreHorizontal, Sparkles, Trash2 } from 'lucide-react'
+import { useState, type ReactNode } from 'react'
 import { useProfile } from '../../contexts/ProfileContext'
 import { useLancamentos } from '../../hooks/useLancamentos'
-import { usePerfis } from '../../hooks/usePerfis'
-import { exportCSV, exportJSON, readFileAsJSON } from '../../lib/io'
-import { repository } from '../../lib/repository'
-import { parseImport, type ImportResult } from '../../lib/schema'
 import { generateSampleData } from '../../lib/sampleData'
 import { cn } from '../../lib/cn'
 import { IconButton } from '../ui/Button'
 import { Popover } from '../ui/Popover'
 import { useToast } from '../ui/Toast'
-import { ImportPreviewModal } from './ImportPreviewModal'
+import { ExportModal } from './ExportModal'
 
 function MenuItem({
   icon,
@@ -59,52 +47,12 @@ interface DataMenuProps {
 export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
   const { perfis, active, isAll } = useProfile()
   const { all, importItems, clearActive } = useLancamentos()
-  const { bulkPutPerfis } = usePerfis()
   const { showToast } = useToast()
-  const fileRef = useRef<HTMLInputElement>(null)
-  const [preview, setPreview] = useState<ImportResult | null>(null)
+  const [exportOpen, setExportOpen] = useState(false)
   const [confirmingClear, setConfirmingClear] = useState(false)
 
   const nada = perfis.length === 0
   const perfilVazio = all.length === 0
-
-  const doExportJSON = async () => {
-    const items = await repository.listarLancamentos()
-    exportJSON(perfis, items)
-  }
-
-  const doExportCSV = async () => {
-    const items = await repository.listarLancamentos()
-    const nomePorPerfil = Object.fromEntries(perfis.map((p) => [p.id, p.nome]))
-    exportCSV(items, nomePorPerfil)
-  }
-
-  const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    e.target.value = ''
-    if (!file) return
-    try {
-      const raw = await readFileAsJSON(file)
-      const fallback = active?.id ?? perfis[0]?.id ?? ''
-      const result = parseImport(raw, perfis, fallback)
-      if (result.lancamentos.length === 0 && result.novosPerfis.length === 0) {
-        showToast({ message: 'Arquivo sem dados válidos' })
-        return
-      }
-      setPreview(result)
-    } catch {
-      showToast({ message: 'Não foi possível ler o arquivo JSON' })
-    }
-  }
-
-  const confirmImport = async () => {
-    if (!preview) return
-    if (preview.novosPerfis.length) await bulkPutPerfis(preview.novosPerfis)
-    await importItems(preview.lancamentos)
-    const n = preview.lancamentos.length
-    setPreview(null)
-    showToast({ message: `${n} lançamento(s) importado(s)` })
-  }
 
   const loadSample = async (close: () => void) => {
     if (!active) return
@@ -127,10 +75,10 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
 
   return (
     <>
-      <input ref={fileRef} type="file" accept="application/json,.json" onChange={onFile} className="hidden" />
       <Popover
         align="right"
-        panelClassName="w-56"
+        // Largo o bastante para "Apagar lançamentos do perfil" caber em 1 linha.
+        panelClassName="w-72"
         trigger={({ toggle }) => (
           <IconButton label="Mais opções" onClick={toggle}>
             <MoreHorizontal className="h-5 w-5" />
@@ -140,37 +88,20 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
         {(close) => (
           <div className="flex flex-col gap-0.5" onMouseLeave={() => setConfirmingClear(false)}>
             <MenuItem
-              icon={<Download className="h-4 w-4" />}
-              label="Exportar JSON"
+              icon={<FileDown className="h-4 w-4" />}
+              label="Exportar extrato bancário"
               disabled={nada}
               onClick={() => {
-                void doExportJSON()
                 close()
-              }}
-            />
-            <MenuItem
-              icon={<FileSpreadsheet className="h-4 w-4" />}
-              label="Exportar CSV"
-              disabled={nada}
-              onClick={() => {
-                void doExportCSV()
-                close()
+                setExportOpen(true)
               }}
             />
             <MenuItem
               icon={<FileUp className="h-4 w-4" />}
-              label="Importar extrato (CSV)"
+              label="Importar extrato"
               onClick={() => {
                 close()
                 onImportCsv?.()
-              }}
-            />
-            <MenuItem
-              icon={<Upload className="h-4 w-4" />}
-              label="Importar JSON"
-              onClick={() => {
-                close()
-                fileRef.current?.click()
               }}
             />
             {!isAll && (
@@ -216,14 +147,7 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
         )}
       </Popover>
 
-      <ImportPreviewModal
-        open={preview !== null}
-        lancamentos={preview?.lancamentos ?? []}
-        novosPerfis={preview?.novosPerfis.length ?? 0}
-        invalidos={preview?.invalidos ?? 0}
-        onConfirm={confirmImport}
-        onClose={() => setPreview(null)}
-      />
+      <ExportModal open={exportOpen} onClose={() => setExportOpen(false)} />
     </>
   )
 }

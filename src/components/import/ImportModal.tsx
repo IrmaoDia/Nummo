@@ -48,9 +48,10 @@ export function ImportModal({ open, onClose, onImported }: ImportModalProps) {
     <Modal open={open} onClose={gravando ? () => {} : onClose} maxWidth={640}>
       <div className="overflow-x-clip">
         <div className="border-b border-hairline p-6">
-          <h2 className="text-section font-semibold text-ink">Importar extrato (CSV)</h2>
+          <h2 className="text-section font-semibold text-ink">Importar extrato</h2>
           <p className="mt-1 text-legend text-subtle">
-            Extrato do Banco Inter. Nada é salvo antes de você conferir.
+            Extrato do banco em CSV ou backup do Nummo em JSON. Nada é salvo antes de você
+            conferir.
           </p>
         </div>
 

@@ -41,12 +41,15 @@ export function ImportDropzone({ onFile, disabled }: ImportDropzoneProps) {
       </div>
       <div className="flex flex-col gap-1">
         <p className="text-body font-medium text-ink">Arraste o extrato aqui</p>
-        <p className="text-legend text-subtle">Arquivo .csv exportado do seu banco</p>
+        <p className="text-legend text-subtle">
+          .csv do seu banco ou .json de backup do Nummo
+        </p>
       </div>
+      {/* TODO: importar PDF do Inter (aguardando layout de exemplo) */}
       <input
         ref={inputRef}
         type="file"
-        accept=".csv,text/csv"
+        accept=".csv,text/csv,.json,application/json"
         className="hidden"
         onChange={(e) => {
           receber(e.target.files)

@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { csvExtrato } from '../../io'
 import { limparTitulo, parseDataBR, parseInter, parseValorBR } from '../parseInter'
+import type { Lancamento } from '../../../types'
 
 /** Cabeçalho real do extrato do Inter, com as 4 linhas de resumo e a linha vazia. */
 const CABECALHO = [
@@ -204,5 +206,60 @@ describe('parseInter — arquivo real completo', () => {
   it('colapsa espaços do título vindo da Descrição', () => {
     expect(r.linhas.map((l) => l.titulo)).toContain('Lojas Americanas 361 Sao Luis Bra')
     expect(r.linhas.map((l) => l.titulo)).toContain('Supermercado Mateus Sao Luis')
+  })
+})
+
+describe('ida e volta do CSV exportado pelo Nummo', () => {
+  const original: Lancamento[] = [
+    {
+      id: 'a',
+      perfilId: 'p1',
+      titulo: 'Venda Hotmart',
+      data: '2026-07-03',
+      tipo: 'entrada',
+      valor: 4500,
+      categoria: 'empresa',
+      criadoEm: '2026-07-03T10:00:00.000Z',
+      atualizadoEm: '2026-07-03T10:00:00.000Z',
+    },
+    {
+      id: 'b',
+      perfilId: 'p1',
+      titulo: 'Anúncios Meta; campanha "julho"',
+      data: '2026-07-10',
+      tipo: 'gasto',
+      valor: 1250.9,
+      categoria: 'pessoa_fisica',
+      criadoEm: '2026-07-10T10:00:00.000Z',
+      atualizadoEm: '2026-07-10T10:00:00.000Z',
+    },
+  ]
+
+  const r = parseInter(csvExtrato(original))
+
+  it('reconhece todas as linhas exportadas', () => {
+    expect(r.linhas).toHaveLength(2)
+    expect(r.ignoradas).toBe(0)
+    expect(r.inicio).toBe('2026-07-03')
+    expect(r.fim).toBe('2026-07-10')
+  })
+
+  it('preserva data, título, tipo, valor e categoria', () => {
+    expect(r.linhas).toEqual([
+      expect.objectContaining({
+        data: '2026-07-03',
+        titulo: 'Venda Hotmart',
+        tipo: 'entrada',
+        valor: 4500,
+        categoria: 'empresa',
+      }),
+      expect.objectContaining({
+        data: '2026-07-10',
+        titulo: 'Anúncios Meta; campanha "julho"',
+        tipo: 'gasto',
+        valor: 1250.9,
+        categoria: 'pessoa_fisica',
+      }),
+    ])
   })
 })

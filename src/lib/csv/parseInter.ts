@@ -1,4 +1,6 @@
 import Papa from 'papaparse'
+import { CATEGORIA_LABEL, CATEGORIA_ORDER } from '../labels'
+import type { Categoria } from '../../types'
 import type { ResultadoParse } from './types'
 import type { LinhaImportada } from './types'
 
@@ -58,6 +60,11 @@ function cortarCabecalhoResumo(texto: string): string | null {
   return linhas.slice(idx).join('\n')
 }
 
+/** Rótulo de categoria (como sai na exportação do Nummo) → valor interno. */
+const CATEGORIA_POR_ROTULO = new Map<string, Categoria>(
+  CATEGORIA_ORDER.map((c) => [normalizar(CATEGORIA_LABEL[c]), c]),
+)
+
 /** Acha o índice de uma coluna pelo nome normalizado (aceita variações). */
 function acharColuna(cabecalhos: string[], ...candidatos: string[]): number {
   const norm = cabecalhos.map(normalizar)
@@ -91,7 +98,10 @@ export function parseInter(texto: string): ResultadoParse {
   const cabecalho = linhasCsv[0].map((c) => String(c ?? ''))
   const iData = acharColuna(cabecalho, 'data lancamento', 'data')
   const iHistorico = acharColuna(cabecalho, 'historico')
-  const iDescricao = acharColuna(cabecalho, 'descricao')
+  // "titulo"/"categoria": colunas do CSV que o próprio Nummo exporta, para que
+  // um extrato exportado possa ser reimportado sem perder título e categoria.
+  const iDescricao = acharColuna(cabecalho, 'descricao', 'titulo')
+  const iCategoria = acharColuna(cabecalho, 'categoria')
   const iValor = acharColuna(cabecalho, 'valor')
   if (iData === -1 || iValor === -1) return vazio
 
@@ -115,6 +125,10 @@ export function parseInter(texto: string): ResultadoParse {
     const historico = iHistorico !== -1 ? limparTitulo(celulas[iHistorico]) : ''
     // Título vem da Descrição; se faltar, cai no Histórico para não ficar vazio.
     const titulo = limparTitulo(descricao) || historico || 'Lançamento'
+    const categoria =
+      (iCategoria !== -1
+        ? CATEGORIA_POR_ROTULO.get(normalizar(celulas[iCategoria] ?? ''))
+        : undefined) ?? 'sem_categoria'
 
     linhas.push({
       data,
@@ -122,7 +136,7 @@ export function parseInter(texto: string): ResultadoParse {
       // Negativo → gasto; positivo (ou zero) → entrada. Valor sempre positivo.
       tipo: valorBruto < 0 ? 'gasto' : 'entrada',
       valor: Math.abs(valorBruto),
-      categoria: 'sem_categoria',
+      categoria,
       historico,
     })
   }

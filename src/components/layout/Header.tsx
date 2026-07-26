@@ -1,16 +1,13 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { cn } from '../../lib/cn'
 import { formatMonthLong } from '../../lib/format'
 import type { Periodo, View } from '../../types'
 import { ProfileSwitcher } from '../profile/ProfileSwitcher'
 import { Button, IconButton } from '../ui/Button'
 import { PeriodSelector } from './PeriodSelector'
 
-const VIEW_TITLE: Record<View, string> = {
-  dia: 'Por Dia',
-  tipo: 'Por Tipo',
-  resumo: 'Resumo',
-}
+// O nome da visão não aparece aqui: a sidebar já indica qual está ativa.
 
 interface HeaderProps {
   view: View
@@ -47,12 +44,12 @@ export function Header({
         </div>
       )}
 
-      <h1 className="shrink-0 text-section font-semibold text-ink">{VIEW_TITLE[view]}</h1>
-
       {view === 'resumo' ? (
         <PeriodSelector value={periodo} onChange={onPeriodChange} />
       ) : (
-        <div className="flex items-center gap-1">
+        // -ml-2 sem o avatar: alinha o glifo do chevron (recuado dentro do
+        // botão de 36px) com o px-4 do header, em vez do canto do botão.
+        <div className={cn('flex items-center gap-1', !showProfileAvatar && '-ml-2')}>
           <IconButton label="Mês anterior" onClick={onPrev}>
             <ChevronLeft className="h-5 w-5" />
           </IconButton>
