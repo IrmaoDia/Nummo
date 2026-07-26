@@ -233,14 +233,7 @@ export function Sidebar({
         />
       </div>
 
-      <AccountSettings
-        open={contaOpen}
-        onClose={() => setContaOpen(false)}
-        onSignOut={() => {
-          setContaOpen(false)
-          setConfirmSair(true)
-        }}
-      />
+      <AccountSettings open={contaOpen} onClose={() => setContaOpen(false)} />
 
       <Modal open={confirmSair} onClose={() => setConfirmSair(false)} maxWidth={380}>
         <div className="flex flex-col gap-4 p-6">

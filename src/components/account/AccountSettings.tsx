@@ -121,11 +121,10 @@ function CampoSenha({
 interface AccountSettingsProps {
   open: boolean
   onClose: () => void
-  onSignOut: () => void
 }
 
-export function AccountSettings({ open, onClose, onSignOut }: AccountSettingsProps) {
-  const { user, updatePassword } = useAuth()
+export function AccountSettings({ open, onClose }: AccountSettingsProps) {
+  const { user, updatePassword, signOut } = useAuth()
   const { theme, setTheme } = useTheme()
   const { showToast } = useToast()
 
@@ -134,6 +133,7 @@ export function AccountSettings({ open, onClose, onSignOut }: AccountSettingsPro
   const [erros, setErros] = useState<{ nova?: string; confirma?: string }>({})
   const [salvando, setSalvando] = useState(false)
   const [copiado, setCopiado] = useState(false)
+  const [confirmSair, setConfirmSair] = useState(false)
 
   const email = user?.email ?? '—'
 
@@ -145,6 +145,7 @@ export function AccountSettings({ open, onClose, onSignOut }: AccountSettingsPro
       setErros({})
       setSalvando(false)
       setCopiado(false)
+      setConfirmSair(false)
     }
   }, [open])
 
@@ -316,14 +317,40 @@ export function AccountSettings({ open, onClose, onSignOut }: AccountSettingsPro
           <Linha rotulo="Moeda">Real (R$)</Linha>
         </Secao>
 
-        <div className="flex items-center justify-between gap-3 border-t border-hairline p-6">
-          <span className="hidden text-legend text-subtle sm:block">
-            Seus dados ficam salvos na nuvem.
-          </span>
-          <Button variant="secondary" onClick={onSignOut} disabled={salvando}>
-            <LogOut className="h-4 w-4" />
-            Sair
-          </Button>
+        {/* Confirmação embutida: um segundo Modal por cima deste brigaria
+            pelo foco e pelo Esc. */}
+        <div className="border-t border-hairline p-6">
+          {confirmSair ? (
+            <div className="flex flex-col gap-3">
+              <p className="text-body text-ink">
+                Sair da conta? Seus dados ficam salvos na nuvem — você só precisará entrar de
+                novo.
+              </p>
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" onClick={() => setConfirmSair(false)}>
+                  Cancelar
+                </Button>
+                <Button variant="danger" onClick={() => void signOut()}>
+                  Sair
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-3">
+              <span className="hidden text-legend text-subtle sm:block">
+                Seus dados ficam salvos na nuvem.
+              </span>
+              <Button
+                variant="secondary"
+                onClick={() => setConfirmSair(true)}
+                disabled={salvando}
+                className="ml-auto"
+              >
+                <LogOut className="h-4 w-4" />
+                Sair
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Modal>

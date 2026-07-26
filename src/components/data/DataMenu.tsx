@@ -1,8 +1,10 @@
-import { FileDown, FileUp, MoreHorizontal, Trash2 } from 'lucide-react'
+import { FileDown, FileUp, MoreHorizontal, Settings2, Trash2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useProfile } from '../../contexts/ProfileContext'
 import { useLancamentos } from '../../hooks/useLancamentos'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { cn } from '../../lib/cn'
+import { AccountSettings } from '../account/AccountSettings'
 import { IconButton } from '../ui/Button'
 import { Popover } from '../ui/Popover'
 import { useToast } from '../ui/Toast'
@@ -48,7 +50,12 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
   const { all, importItems, clearActive } = useLancamentos()
   const { showToast } = useToast()
   const [exportOpen, setExportOpen] = useState(false)
+  const [contaOpen, setContaOpen] = useState(false)
   const [confirmingClear, setConfirmingClear] = useState(false)
+
+  // Abaixo de 768px a sidebar não é renderizada (ver AppShell), então este menu
+  // é o único caminho para a área da conta no celular.
+  const semSidebar = useMediaQuery('(max-width: 767px)')
 
   const nada = perfis.length === 0
   const perfilVazio = all.length === 0
@@ -96,6 +103,19 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
                 onImportCsv?.()
               }}
             />
+            {semSidebar && (
+              <>
+                <div className="my-1 h-px bg-hairline" />
+                <MenuItem
+                  icon={<Settings2 className="h-4 w-4" />}
+                  label="Configurações"
+                  onClick={() => {
+                    close()
+                    setContaOpen(true)
+                  }}
+                />
+              </>
+            )}
             {!isAll && (
               <>
                 <div className="my-1 h-px bg-hairline" />
@@ -135,6 +155,10 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
       </Popover>
 
       <ExportModal open={exportOpen} onClose={() => setExportOpen(false)} />
+
+      {semSidebar && (
+        <AccountSettings open={contaOpen} onClose={() => setContaOpen(false)} />
+      )}
     </>
   )
 }
