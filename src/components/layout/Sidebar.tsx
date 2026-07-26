@@ -17,7 +17,7 @@ import { useProfile } from '../../contexts/ProfileContext'
 import { useTheme } from '../../hooks/useTheme'
 import { cn } from '../../lib/cn'
 import type { Theme, View } from '../../types'
-import { ManageProfilesModal } from '../profile/ManageProfilesModal'
+import { AccountSettings } from '../account/AccountSettings'
 import { ProfileSwitcher } from '../profile/ProfileSwitcher'
 import { Button } from '../ui/Button'
 import { Logo } from '../ui/Logo'
@@ -163,7 +163,9 @@ export function Sidebar({
 }: SidebarProps) {
   const { activeColor } = useProfile()
   const { signOut } = useAuth()
-  const [manageOpen, setManageOpen] = useState(false)
+  // "Configurações" é a área da conta. Gerenciar perfis continua só no
+  // seletor de perfil do topo, para não haver dois caminhos para a mesma tela.
+  const [contaOpen, setContaOpen] = useState(false)
   const [confirmSair, setConfirmSair] = useState(false)
 
   return (
@@ -221,7 +223,7 @@ export function Sidebar({
           icon={<Settings2 className="h-[18px] w-[18px] shrink-0" />}
           label="Configurações"
           collapsed={collapsed}
-          onClick={() => setManageOpen(true)}
+          onClick={() => setContaOpen(true)}
         />
         <FooterRow
           icon={<LogOut className="h-[18px] w-[18px] shrink-0" />}
@@ -231,7 +233,14 @@ export function Sidebar({
         />
       </div>
 
-      <ManageProfilesModal open={manageOpen} onClose={() => setManageOpen(false)} />
+      <AccountSettings
+        open={contaOpen}
+        onClose={() => setContaOpen(false)}
+        onSignOut={() => {
+          setContaOpen(false)
+          setConfirmSair(true)
+        }}
+      />
 
       <Modal open={confirmSair} onClose={() => setConfirmSair(false)} maxWidth={380}>
         <div className="flex flex-col gap-4 p-6">

@@ -10,9 +10,11 @@ import { ProfilePopover } from './ProfilePopover'
 interface ProfileSwitcherProps {
   collapsed?: boolean
   align?: 'left' | 'right'
+  /** Versão de 40px, para o header do mobile — onde 48px não cabe. */
+  compact?: boolean
 }
 
-export function ProfileSwitcher({ collapsed, align = 'left' }: ProfileSwitcherProps) {
+export function ProfileSwitcher({ collapsed, align = 'left', compact }: ProfileSwitcherProps) {
   const { perfis, counts, activeId, active, isAll, activeColor, setActive } = useProfile()
   const [manage, setManage] = useState<{ open: boolean; create: boolean }>({
     open: false,
@@ -23,13 +25,21 @@ export function ProfileSwitcher({ collapsed, align = 'left' }: ProfileSwitcherPr
 
   const avatar = isAll ? (
     <span
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-2 text-subtle"
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-full bg-surface-2 text-subtle',
+        compact ? 'h-6 w-6' : 'h-7 w-7',
+      )}
       style={{ boxShadow: '0 0 0 2px var(--border)' }}
     >
-      <Layers className="h-3.5 w-3.5" />
+      <Layers className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} />
     </span>
   ) : (
-    <ProfileAvatar emoji={active?.emoji ?? '🏠'} color={activeColor} size={28} ring />
+    <ProfileAvatar
+      emoji={active?.emoji ?? '🏠'}
+      color={activeColor}
+      size={compact ? 24 : 28}
+      ring
+    />
   )
 
   return (
@@ -45,8 +55,11 @@ export function ProfileSwitcher({ collapsed, align = 'left' }: ProfileSwitcherPr
             data-profile-switcher
             aria-label="Trocar de perfil"
             className={cn(
-              'flex h-12 items-center gap-2.5 rounded-xl border border-hairline bg-surface transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.04]',
-              collapsed ? 'w-12 justify-center px-0' : 'w-full px-2.5',
+              'flex items-center gap-2.5 rounded-xl border border-hairline bg-surface transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.04]',
+              compact ? 'h-10' : 'h-12',
+              collapsed
+                ? cn('justify-center px-0', compact ? 'w-10' : 'w-12')
+                : 'w-full px-2.5',
               open && 'ring-2 ring-acento/30',
             )}
           >

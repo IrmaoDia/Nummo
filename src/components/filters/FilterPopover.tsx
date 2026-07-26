@@ -24,23 +24,27 @@ export function FilterPopover({
     <Popover
       align="right"
       panelClassName="w-[300px]"
+      // No mobile o botão vira só o ícone: com o rótulo, o header não cabe em
+      // 360px e o próprio "Filtros" era o primeiro a ser cortado.
       trigger={({ open, toggle }) => (
         <button
           type="button"
+          aria-label="Filtros"
           onClick={toggle}
           className={cn(
-            'inline-flex h-8 items-center gap-1.5 rounded-xl border border-hairline bg-surface-2 px-3 text-legend font-medium text-ink transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.06]',
+            'relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-hairline bg-surface-2 text-legend font-medium text-ink transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.06]',
+            'sm:h-8 sm:w-auto sm:justify-start sm:gap-1.5 sm:px-3',
             open && 'ring-2 ring-acento/40',
           )}
         >
-          <SlidersHorizontal className="h-3.5 w-3.5" />
-          Filtros
+          <SlidersHorizontal className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
+          <span className="hidden sm:inline">Filtros</span>
           {activeCount > 0 && (
-            <span className="tabular inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-acento px-1 text-[10px] font-semibold text-white">
+            <span className="tabular absolute -right-1 -top-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-acento px-1 text-[10px] font-semibold text-white sm:static">
               {activeCount}
             </span>
           )}
-          <ChevronDown className="h-3.5 w-3.5 text-subtle" />
+          <ChevronDown className="hidden h-3.5 w-3.5 text-subtle sm:block" />
         </button>
       )}
     >

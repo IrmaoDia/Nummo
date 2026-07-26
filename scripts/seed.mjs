@@ -1,6 +1,5 @@
 // Gera ~40 lançamentos fictícios espalhados por 3 meses e grava em public/seed.json.
-// Uso: npm run seed  →  depois importe o arquivo pelo menu ⋯ › Importar,
-// ou clique em "Carregar dados de exemplo" no app.
+// Uso: npm run seed  →  depois importe public/seed.json pelo menu ⋯ › Importar extrato.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'

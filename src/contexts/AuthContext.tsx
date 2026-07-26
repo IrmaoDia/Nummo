@@ -23,6 +23,8 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<AuthResult>
   signUp: (email: string, password: string) => Promise<AuthResult>
   signOut: () => Promise<void>
+  /** Troca a senha do usuário logado. A sessão continua ativa. */
+  updatePassword: (password: string) => Promise<AuthResult>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -34,6 +36,10 @@ function traduzErro(message: string): string {
     return 'E-mail ou senha inválidos'
   if (m.includes('already registered') || m.includes('already been registered') || m.includes('user already'))
     return 'Este e-mail já está cadastrado'
+  if (m.includes('should be different'))
+    return 'A nova senha precisa ser diferente da atual'
+  if (m.includes('same password'))
+    return 'A nova senha precisa ser diferente da atual'
   if (m.includes('password should be at least') || m.includes('password'))
     return 'A senha precisa ter pelo menos 6 caracteres'
   if (m.includes('unable to validate email') || m.includes('invalid email') || m.includes('email address') || m.includes('is invalid'))
@@ -92,6 +98,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       signOut: async () => {
         await supabase.auth.signOut()
+      },
+      updatePassword: async (password) => {
+        const { error } = await supabase.auth.updateUser({ password })
+        return error ? { error: traduzErro(error.message) } : {}
       },
     }),
     [session, loading, justSignedUp],

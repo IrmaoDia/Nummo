@@ -1,8 +1,7 @@
-import { FileDown, FileUp, MoreHorizontal, Sparkles, Trash2 } from 'lucide-react'
+import { FileDown, FileUp, MoreHorizontal, Trash2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useProfile } from '../../contexts/ProfileContext'
 import { useLancamentos } from '../../hooks/useLancamentos'
-import { generateSampleData } from '../../lib/sampleData'
 import { cn } from '../../lib/cn'
 import { IconButton } from '../ui/Button'
 import { Popover } from '../ui/Popover'
@@ -54,13 +53,6 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
   const nada = perfis.length === 0
   const perfilVazio = all.length === 0
 
-  const loadSample = async (close: () => void) => {
-    if (!active) return
-    await importItems(generateSampleData(active.id))
-    close()
-    showToast({ message: 'Dados de exemplo carregados' })
-  }
-
   const doClear = async (close: () => void) => {
     const snapshot = all
     await clearActive()
@@ -107,11 +99,6 @@ export function DataMenu({ onImportCsv }: DataMenuProps = {}) {
             {!isAll && (
               <>
                 <div className="my-1 h-px bg-hairline" />
-                <MenuItem
-                  icon={<Sparkles className="h-4 w-4" />}
-                  label="Carregar dados de exemplo"
-                  onClick={() => void loadSample(close)}
-                />
                 {confirmingClear ? (
                   <div className="flex flex-col gap-1 rounded-lg bg-gasto/10 p-2">
                     <span className="px-1 text-legend text-ink">Apagar deste perfil?</span>

@@ -37,10 +37,17 @@ export function Header({
   showProfileAvatar,
 }: HeaderProps) {
   return (
-    <header className="glass sticky top-0 z-30 flex min-h-14 items-center gap-3 border-b border-hairline bg-white/72 px-4 py-2 dark:bg-black/60">
+    <header
+      className="glass sticky top-0 z-30 flex min-h-14 items-center gap-2 border-b border-hairline bg-white/72 py-2 dark:bg-black/60 sm:gap-3"
+      // Respiro fixo de 16px + a safe area do aparelho (notch em paisagem).
+      style={{
+        paddingLeft: 'max(16px, env(safe-area-inset-left))',
+        paddingRight: 'max(16px, env(safe-area-inset-right))',
+      }}
+    >
       {showProfileAvatar && (
         <div className="shrink-0">
-          <ProfileSwitcher collapsed align="left" />
+          <ProfileSwitcher collapsed compact align="left" />
         </div>
       )}
 
@@ -48,15 +55,17 @@ export function Header({
         <PeriodSelector value={periodo} onChange={onPeriodChange} />
       ) : (
         // -ml-2 sem o avatar: alinha o glifo do chevron (recuado dentro do
-        // botão de 36px) com o px-4 do header, em vez do canto do botão.
-        <div className={cn('flex items-center gap-1', !showProfileAvatar && '-ml-2')}>
-          <IconButton label="Mês anterior" onClick={onPrev}>
+        // botão de 36px) com o padding do header, em vez do canto do botão.
+        <div className={cn('flex min-w-0 items-center gap-1', !showProfileAvatar && '-ml-2')}>
+          <IconButton label="Mês anterior" onClick={onPrev} className="shrink-0">
             <ChevronLeft className="h-5 w-5" />
           </IconButton>
-          <span className="min-w-[132px] text-center text-body font-medium text-ink first-letter:uppercase sm:min-w-[150px]">
+          {/* 13px no mobile: a 15px, "Novembro de 2026" não cabe junto com o
+              avatar e as ações numa tela de 360px e quebra em duas linhas. */}
+          <span className="min-w-[116px] whitespace-nowrap text-center text-legend font-medium text-ink first-letter:uppercase sm:min-w-[150px] sm:text-body">
             {formatMonthLong(month)}
           </span>
-          <IconButton label="Próximo mês" onClick={onNext}>
+          <IconButton label="Próximo mês" onClick={onNext} className="shrink-0">
             <ChevronRight className="h-5 w-5" />
           </IconButton>
           <Button size="sm" variant="secondary" onClick={onToday} className="ml-1 hidden sm:inline-flex">
@@ -65,7 +74,7 @@ export function Header({
         </div>
       )}
 
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
         {activeChips}
         {filtersSlot}
         {actionsSlot}
